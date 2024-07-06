@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://hg815kjiwaep"]
+
+[ext_resource type="Script" path="res://enemies/enemy.gd" id="1_rln83"]
+[ext_resource type="PackedScene" uid="uid://v17e6ijpd3h1" path="res://misc/skull.tscn" id="2_ba3i4"]
+[ext_resource type="Texture2D" uid="uid://cfkaks8827kf1" path="res://addons/Tiny Swords/Resources/Sheep/HappySheep_Bouncing.png" id="3_gmkvh"]
+[ext_resource type="PackedScene" uid="uid://chg7dc7mqcdps" path="res://misc/meat.tscn" id="3_khn64"]
+[ext_resource type="Script" path="res://enemies/behaviors/follow_player.gd" id="4_ilbr5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_myd6j"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdahr"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tl8v"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lfmf"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_re7x5"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tnxg"]
+atlas = ExtResource("3_gmkvh")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgrmi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_myd6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdahr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tl8v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6lfmf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_re7x5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tnxg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3leyo"]
+radius = 17.1594
+height = 43.6772
+
+[node name="sheep" type="CharacterBody2D" groups=["enemies"]]
+motion_mode = 1
+script = ExtResource("1_rln83")
+health = 1
+death_prefab = ExtResource("2_ba3i4")
+drop_chance = 0.025
+drop_items = Array[PackedScene]([ExtResource("3_khn64")])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -30)
+sprite_frames = SubResource("SpriteFrames_xgrmi")
+autoplay = "default"
+frame_progress = 0.821015
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.52435e-29, -32)
+scale = Vector2(1.34037, 1.05318)
+shape = SubResource("CapsuleShape2D_3leyo")
+
+[node name="Follow_Player" type="Node" parent="."]
+script = ExtResource("4_ilbr5")
+speed = 2.0
+
+[node name="DamageDigitMarker" type="Marker2D" parent="."]
+position = Vector2(-1, -56)
